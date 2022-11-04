@@ -12,4 +12,6 @@ blog_route.get('/',blogController.loadBlog);
 blog_route.get('/post/:id',blogController.loadPost);
 blog_route.post('/add-comment',blogController.addComment);
 
+blog_route.post('/do-reply',blogController.doReply);
+
 module.exports = blog_route;

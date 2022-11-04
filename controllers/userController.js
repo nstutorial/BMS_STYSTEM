@@ -7,8 +7,7 @@ const config = require("../config/config");
 const adminController = require('./adminController');
 
 const sendResetPasswordMail = async(name,email,token)=>{
-    try {
-       
+    try {       
      const transport =  nodemailer.createTransport({
         host:'smtp.gmail.com',
         port:587,

@@ -20,26 +20,22 @@
                     </header>
                     <!-- Preview image figure-->
                     <figure class="mb-4">
-                        <% if(post.image !==undefined && post.image !=='' ){
-                             %>
+                        <% if(post.image !==undefined && post.image !=='' ){ %>
                             <img class="img-fluid rounded mb-4 mb-lg-0" src="<%= post.image %>" alt="..." />
-                            <% 
-                            }else{
-                             %>
+                            <% }else{ %>
                                 <img class="img-fluid rounded mb-4 mb-lg-0"
                                     src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="..." />
-                             <%
-                                 }
-                             %>
-                                    
+                                <% } %>
+
                     </figure>
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mb-4">
-                            <%= post.content %>
+                            <%= post.content.substring(0,50) %>
                         </p>
                     </section>
                 </article>
+
                 <!-- Comments section-->
                 <section class="mb-5">
                     <div class="card bg-light">
@@ -50,8 +46,7 @@
                                 <input type="hidden" name="post_id" value="<%= post._id  %> ">
                                 <input type="text" name="username" placeholder="Enter Your Name"
                                     class="form-control mb-3" required>
-                                <!-- <textarea class="form-control" name="comment" required rows="3" placeholder="Join the discussion and leave a comment!">
-                                </textarea> -->
+                                 <input type="email" name="email" class="form-control mb-3" id="">   
                                 <textarea class="form-control" name="comment" rows="3"
                                     placeholder="Enter comment here"></textarea>
                                 <input type="submit" value="Submit" class="btn btn-primary mt-3">
@@ -69,6 +64,40 @@
                                             <%= comment.username %>
                                         </div>
                                         <%= comment.comment %>
+
+                                        <%
+                                        if(comment.replies){
+                                            comment.replies.forEach(function(reply){
+                                                console.log(reply);
+                                                %>
+                                                <div class="d-flex mt-4">
+                                                <div class="flex-shrink-0"><img class="rounded-circle"
+                                                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                                <div class="ms-3">
+                                                    <div class="fw-bold"><%= reply.name%></div>
+                                                    <%= reply.reply%>
+                                                    </div>
+                                                    </div>  
+                                                <%
+                                            })
+                                        }
+                                        %>
+
+                                        <div class="col-sm-12">
+                                            <form class="do-reply">
+                                                <input type="hidden" name="post_id" value="<%= post._id  %>">
+                                                <input type="hidden" name="comment_id" value="<%= comment._id  %>">
+                                                <input type="hidden" name="comment_email" value="<%= comment.email  %>">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control mb-3" placeholder="Enter Name" name="name" required>
+                                                 </div>
+                                                 <div class="form-group">
+                                                    <textarea class="form-control mb-3" name="reply" placeholder="Enter reply" required></textarea>
+                                                 </div>
+                                                 <input type="submit" value="Reply" class="btn btn-primary btn-sm">
+                                                </form>
+                                            
+                                            </div>
                                     </div>
                                 </div>
                                 <% }); } %>
@@ -118,16 +147,21 @@
                     <div class="card-body">You can put anything you want inside of these side widgets. They are easy to
                         use, and feature the Bootstrap 5 card component!</div>
                 </div>
+                //
             </div>
+
         </div>
+
     </div>
+
     <script>
         // jQuery code.....................
         $(document).ready(function () {
             $('#comment-form').submit(function (event) {
                 event.preventDefault();
-
+                var obj = $(this);
                 var formData = $(this).serialize();
+                console.log(formData);
                 $.ajax({
                     url: "/add-comment",
                     type: "POST",
@@ -137,10 +171,28 @@
                         $('.com-status').text(data.msg);
                         setTimeout(function () {
                             $('.com-status').text('');
-                        }, 5000)
+                        }, 5000);
+                        $(obj)[0].reset();
                     }
                 });
             });
+
+            $(".do-reply").submit(function(event){
+                event.preventDefault();
+                var formData = $(this).serialize();
+                console.log(formData);
+                var obj = $(this);
+                $.ajax({
+                    url: "/do-reply",
+                    type: "POST",
+                    data: formData,
+                    success: function (data) {
+                        console.log(data);
+                      $(obj)[0].reset();
+                      $(obj).parent().parent().append('<p>'+data.msg+'</p>')
+                    }
+                });
+            })
         });
     </script>
 
