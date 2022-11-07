@@ -8330,3 +8330,16 @@ a[data-toggle="collapse"] {
 
 .subscribe-form .form-control {
   background: #4897fc; }
+
+  /* custom css */
+  .table-title{
+    font-weight: 600;
+    font-style: italic;
+  }
+  
+  .table-title a:hover{
+    color: red;    
+  }
+  .text-italic{
+    font-style: italic;
+  }

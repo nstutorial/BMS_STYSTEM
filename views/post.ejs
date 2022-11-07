@@ -31,7 +31,7 @@
                     <!-- Post content-->
                     <section class="mb-5">
                         <p class="fs-5 mb-4">
-                            <%= post.content.substring(0,50) %>
+                            <%= post.content %><!--Read more next page-->
                         </p>
                     </section>
                 </article>
@@ -46,7 +46,7 @@
                                 <input type="hidden" name="post_id" value="<%= post._id  %> ">
                                 <input type="text" name="username" placeholder="Enter Your Name"
                                     class="form-control mb-3" required>
-                                 <input type="email" name="email" class="form-control mb-3" id="">   
+                                 <input type="email" name="email" class="form-control mb-3" id="" placeholder="Enter email">   
                                 <textarea class="form-control" name="comment" rows="3"
                                     placeholder="Enter comment here"></textarea>
                                 <input type="submit" value="Submit" class="btn btn-primary mt-3">
@@ -84,7 +84,7 @@
                                         %>
 
                                         <div class="col-sm-12">
-                                            <form class="do-reply">
+                                            <form class="do-reply mt-3">
                                                 <input type="hidden" name="post_id" value="<%= post._id  %>">
                                                 <input type="hidden" name="comment_id" value="<%= comment._id  %>">
                                                 <input type="hidden" name="comment_email" value="<%= comment.email  %>">

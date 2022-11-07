@@ -66,8 +66,10 @@ const blogSetupSave = async(req,res)=>{
 }
 const dashboard =async(req,res)=>{
     try {
+        const allPosts = await Post.find({});
+        // console.log(allPosts);
         //res.send("Hi Admin Dashboard Here")
-        res.render('admin/dashboard')
+        res.render('admin/dashboard',{posts:allPosts})
     } catch (error) {
         console.log(error.message);
     }
@@ -110,6 +112,15 @@ const uploadPostImage =async(req,res)=>{
         
     }
 }
+
+const deletePost = async(req,res)=>{
+    try {
+       await Post.deleteOne({_id:req.body.id})
+       res.status(200).send({success:true, msg:"Post Deleted Successfully !"});
+    } catch (error) {
+        res.status(400).send({success:false, msg:error.message});
+    }
+}
 module.exports ={
     // login, 
     blogSetup,
@@ -118,5 +129,6 @@ module.exports ={
     loadPostDashboard,
     addPost,
     securePassword,
-    uploadPostImage
+    uploadPostImage,
+    deletePost
 }

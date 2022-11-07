@@ -24,7 +24,7 @@
         </div>
         <div class="col-lg-5">
             <h1 class="font-weight-light"><%= posts[i].title %></h1>
-            <p><%= posts[i].content %></p>
+            <p><%= posts[i].content.substring(0,300) %></p>
             <a class="btn btn-primary" href="/post/<%= posts[i]._id %>">Read More</a>
         </div>
     </div>

@@ -45,6 +45,7 @@ const loadBlog = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const loadPost = async (req, res) => {
   try {
     const post = await Post.findOne({ _id: req.params.id });
@@ -54,6 +55,7 @@ const loadPost = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const addComment = async (req, res) => {
   try {
     const post_id = req.body.post_id;
@@ -105,6 +107,7 @@ const doReply = async (req, res) => {
     res.status(200).send({ success: false, msg: error.message });
   }
 };
+
 module.exports = {
   loadBlog,
   loadPost,
