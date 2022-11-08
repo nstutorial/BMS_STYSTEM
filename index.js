@@ -1,7 +1,7 @@
- require('dotenv').config
+ require('dotenv').config();
  const mongoose = require("mongoose");
-const URL = "mongodb+srv://bmsnimai:BMSNimai123@cluster0.jhpy8nd.mongodb.net/BMS?retryWrites=true&w=majority"
-mongoose.connect(URL);
+
+mongoose.connect(process.env.URL);
 
 const express = require('express');
 const app = express();
@@ -22,6 +22,7 @@ app.use('/',user_route);
 const blogRoute = require('./routes/blogRoute');
 app.use('/',blogRoute);
 
-app.listen(process.env.PORT || 3000, ()=>{
-    console.log("server is running");
+const port = process.env.PORT || 3000;
+app.listen(port, ()=>{
+    console.log(`server is running at ${port}`);
 })
